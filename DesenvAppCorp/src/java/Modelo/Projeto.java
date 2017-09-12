@@ -33,6 +33,16 @@ public class Projeto implements Serializable {
     private long idALuno;
     private long idProfessor;
 
+    public Projeto(String titulo, Date dataInicio, Date dataFim, long idALuno, long idProfessor) {
+        this.titulo = titulo;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+        this.idALuno = idALuno;
+        this.idProfessor = idProfessor;
+    }
+
+    
+    
     public long getIdALuno() {
         return idALuno;
     }

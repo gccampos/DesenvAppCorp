@@ -6,8 +6,10 @@
 package DAO;
 
 import Modelo.Professor;
+import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -28,16 +30,13 @@ public class ProfessorDAO {
         return professor;
     }
 
-    public Professor criaProfessor(String nome, String endereco, String CPF, String email, String titulacao) {
+    public void criaProfessor(Professor professor) throws SQLException {
         EntityManager em = factory.createEntityManager();
-        Professor professor = new Professor(titulacao);
-        professor.setCPF(CPF);
-        professor.setEmail(email);
-        professor.setEndereco(endereco);
-        professor.setNome(nome);
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         em.persist(professor);
+        et.commit();
         em.close();
-        return professor;
-        
     }
+
 }

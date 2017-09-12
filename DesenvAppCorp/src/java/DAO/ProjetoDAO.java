@@ -5,10 +5,13 @@
  */
 package DAO;
 
+import Modelo.Aluno;
 import Modelo.Projeto;
+import java.sql.SQLException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -19,6 +22,15 @@ import javax.persistence.Query;
 public class ProjetoDAO {
 
     EntityManagerFactory factory = Persistence.createEntityManagerFactory("persistenceUnit");
+
+    public void persistirProjeto(Projeto projeto) throws SQLException {
+        EntityManager em = factory.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+        em.persist(projeto);
+        et.commit();
+        em.close();
+    }
 
     public Projeto buscarPorTitulo(String titulo) {
         EntityManager em = factory.createEntityManager();

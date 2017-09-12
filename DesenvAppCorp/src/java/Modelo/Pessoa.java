@@ -26,6 +26,13 @@ public class Pessoa implements Serializable {
     private String CPF;
     private String endereco;
 
+    public Pessoa(String nome, String email, String CPF, String endereco) {
+        this.nome = nome;
+        this.email = email;
+        this.CPF = CPF;
+        this.endereco = endereco;
+    }
+
     public String getNome() {
         return nome;
     }

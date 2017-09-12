@@ -27,12 +27,10 @@ public class Professor extends Pessoa implements Serializable {
     private List<Disciplina> disciplinas;
     private String titulacao;
 
-    public Professor(String titulacao) {
+    public Professor(String titulacao, String nome, String email, String CPF, String endereco) {
+        super(nome, email, CPF, endereco);
         this.titulacao = titulacao;
     }
-    
-    
-    
 
     public String getTitulacao() {
         return titulacao;

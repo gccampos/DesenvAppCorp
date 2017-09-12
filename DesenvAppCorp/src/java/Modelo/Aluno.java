@@ -26,6 +26,7 @@ public class Aluno extends Pessoa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ID;
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String matricula;
     private float CR;
     @Temporal(TemporalType.DATE)
@@ -33,18 +34,17 @@ public class Aluno extends Pessoa implements Serializable {
     @OneToMany
     private List<Projeto> projetos;
 
+    public Aluno(Date dataIngresso, String nome, String email, String CPF, String endereco) {
+        super(nome, email, CPF, endereco);
+        this.dataIngresso = dataIngresso;
+    }
+
     public List<Projeto> getProjetos() {
         return projetos;
     }
 
     public void setProjetos(List<Projeto> projetos) {
         this.projetos = projetos;
-    }
-    
-    public Aluno(String matricula, float CR, Date dataIngresso) {
-        this.matricula = matricula;
-        this.CR = CR;
-        this.dataIngresso = dataIngresso;
     }
 
     public String getMatricula() {

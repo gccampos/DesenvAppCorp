@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets;
+package Servlet;
 
-import DAO.ProfessorDAO;
-import Modelo.Professor;
+import DAO.DisciplinaDAO;
+import Modelo.Disciplina;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -21,28 +21,29 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author guilherme
  */
-@WebServlet(name = "BuscaProfessorServlet", urlPatterns = {"/BuscaProfessorServlet"})
-public class BuscaProfessorServlet extends HttpServlet {
+@WebServlet(name = "BuscaDisciplinaServlet", urlPatterns = {"/BuscaDisciplinaServlet"})
+public class BuscaDisciplinaServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        ProfessorDAO professorDAO = new ProfessorDAO();
+        DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
         try (PrintWriter out = response.getWriter()) {
-            Professor professor = null;
+            Disciplina disciplina = null;
             String nome = request.getParameter("nome");
 
             boolean nomeIsValid = (nome != null);
             if (nomeIsValid) {
-                professor = professorDAO.buscarPorNome(nome);
+                disciplina = disciplinaDAO.buscarPorNome(nome);
             }
 
             String erro = "Houve algum problema.";
             request.setAttribute("erro", erro);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ProfessorEncontrado.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/DisciplinaEncontrada.jsp");
             if (dispatcher != null) {
                 dispatcher.forward(request, response);
             }
         }
     }
+
 }

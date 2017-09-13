@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets;
+package Servlet;
 
 import DAO.ProfessorDAO;
 import Modelo.Professor;
@@ -21,32 +21,28 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author guilherme
  */
-@WebServlet(name = "AdicionaProfessorServlet", urlPatterns = {"/AdicionaProfessorServlet"})
-public class AdicionaProfessorServlet extends HttpServlet {
+@WebServlet(name = "BuscaProfessorServlet", urlPatterns = {"/BuscaProfessorServlet"})
+public class BuscaProfessorServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         ProfessorDAO professorDAO = new ProfessorDAO();
         try (PrintWriter out = response.getWriter()) {
-
+            Professor professor = null;
             String nome = request.getParameter("nome");
-            String email = request.getParameter("email");
-            String endereco = request.getParameter("endereco");
-            String cpf = request.getParameter("cpf");
-            String titulacao = request.getParameter("titulacao");
 
-            Professor professor = new Professor(titulacao, nome, email, cpf, endereco);
-            professorDAO.criaProfessor(professor);
+            boolean nomeIsValid = (nome != null);
+            if (nomeIsValid) {
+                professor = professorDAO.buscarPorNome(nome);
+            }
 
-            String erro = "Houve algum problema com seu cadastro! Por favor, preencha o formulário abaixo novamente conforme as recomendações em cada campo.";
+            String erro = "Houve algum problema.";
             request.setAttribute("erro", erro);
-
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ProfessorEncontrado.jsp");
             if (dispatcher != null) {
                 dispatcher.forward(request, response);
             }
         }
     }
-
 }

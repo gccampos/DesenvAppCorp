@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlets;
+package Servlet;
 
-import DAO.ProjetoDAO;
-import Modelo.Projeto;
+import DAO.AlunoDAO;
+import Modelo.Aluno;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -21,28 +21,29 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author guilherme
  */
-@WebServlet(name = "BuscaProjetoServlet", urlPatterns = {"/BuscaProjetoServlet"})
-public class BuscaProjetoServlet extends HttpServlet {
+@WebServlet(name = "BuscaAlunoServlet", urlPatterns = {"/BuscaAlunoServlet"})
+public class BuscaAlunoServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        ProjetoDAO projetoDAO = new ProjetoDAO();
+        AlunoDAO alunoDAO = new AlunoDAO();
         try (PrintWriter out = response.getWriter()) {
-            Projeto projeto = null;
-            String titulo = request.getParameter("titulo");
+            Aluno aluno = null;
+            String nome = request.getParameter("nome");
 
-            boolean tituloIsValid = (titulo != null);
-            if (tituloIsValid) {
-                projeto = projetoDAO.buscarPorTitulo(titulo);
+            boolean nomeIsValid = (nome != null);
+            if (nomeIsValid) {
+                aluno = alunoDAO.buscarPorNome(nome);
             }
 
             String erro = "Houve algum problema.";
             request.setAttribute("erro", erro);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/ProjetoEncontrado.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/AlunoEncontrado.jsp");
             if (dispatcher != null) {
                 dispatcher.forward(request, response);
             }
         }
     }
+
 }

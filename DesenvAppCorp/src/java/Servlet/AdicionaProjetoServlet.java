@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,6 +30,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "AdicionaProjetoServlet", urlPatterns = {"/AdicionaProjetoServlet"})
 public class AdicionaProjetoServlet extends HttpServlet {
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            this.processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdicionaProjetoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {

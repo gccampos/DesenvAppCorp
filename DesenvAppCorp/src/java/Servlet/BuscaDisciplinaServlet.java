@@ -10,6 +10,8 @@ import Modelo.Disciplina;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +26,14 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "BuscaDisciplinaServlet", urlPatterns = {"/BuscaDisciplinaServlet"})
 public class BuscaDisciplinaServlet extends HttpServlet {
 
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            this.processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(BuscaDisciplinaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
@@ -35,6 +45,8 @@ public class BuscaDisciplinaServlet extends HttpServlet {
             boolean nomeIsValid = (nome != null);
             if (nomeIsValid) {
                 disciplina = disciplinaDAO.buscarPorNome(nome);
+                request.setAttribute("disciplina", disciplina);
+
             }
 
             String erro = "Houve algum problema.";

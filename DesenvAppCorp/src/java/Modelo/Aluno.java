@@ -8,9 +8,8 @@ package Modelo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -23,10 +22,9 @@ import javax.persistence.TemporalType;
 @Entity
 public class Aluno extends Pessoa implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ID;
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String matricula;
     private float CR;
     @Temporal(TemporalType.DATE)
@@ -34,9 +32,13 @@ public class Aluno extends Pessoa implements Serializable {
     @OneToMany
     private List<Projeto> projetos;
 
-    public Aluno(Date dataIngresso, String nome, String email, String CPF, String endereco) {
+    public Aluno(Date dataIngresso, String nome, String matricula, String email, String CPF, String endereco) {
         super(nome, email, CPF, endereco);
         this.dataIngresso = dataIngresso;
+        this.matricula = matricula;
+    }
+
+    public Aluno() {
     }
 
     public List<Projeto> getProjetos() {

@@ -7,6 +7,8 @@ package Modelo;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -20,11 +22,15 @@ import javax.persistence.InheritanceType;
 public class Pessoa implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ID;
     private String nome;
     private String email;
     private String CPF;
     private String endereco;
+
+    public Pessoa() {
+    }
 
     public Pessoa(String nome, String email, String CPF, String endereco) {
         this.nome = nome;

@@ -12,6 +12,8 @@ import Modelo.Professor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +27,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "AdicionaDisciplinaServlet", urlPatterns = {"/AdicionaDisciplinaServlet"})
 public class AdicionaDisciplinaServlet extends HttpServlet {
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            this.processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdicionaDisciplinaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -45,7 +55,7 @@ public class AdicionaDisciplinaServlet extends HttpServlet {
             String erro = "Houve algum problema com seu cadastro! Por favor, preencha o formulário abaixo novamente conforme as recomendações em cada campo.";
             request.setAttribute("erro", erro);
 
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.html");
             if (dispatcher != null) {
                 dispatcher.forward(request, response);
             }

@@ -10,6 +10,8 @@ import Modelo.Aluno;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +26,18 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "BuscaAlunoServlet", urlPatterns = {"/BuscaAlunoServlet"})
 public class BuscaAlunoServlet extends HttpServlet {
 
+    public void doPost(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            processRequest(request, response);
+        } catch (ServletException ex) {
+            Logger.getLogger(BuscaAlunoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(BuscaAlunoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(BuscaAlunoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
@@ -35,6 +49,7 @@ public class BuscaAlunoServlet extends HttpServlet {
             boolean nomeIsValid = (nome != null);
             if (nomeIsValid) {
                 aluno = alunoDAO.buscarPorNome(nome);
+                request.setAttribute("aluno", aluno);
             }
 
             String erro = "Houve algum problema.";
